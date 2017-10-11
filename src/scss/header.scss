@@ -1,0 +1,91 @@
+@mixin transition($property, $duration, $timing){
+  -o-transition: $property $duration $timing;
+  -moz-transition: $property $duration $timing;
+  -webkit-transition: $property $duration $timing;
+  transition: $property $duration $timing;
+}
+
+header{
+  padding: 25px 15px;
+  text-align: center;
+
+  #logo{
+    color: #D0E4F2;
+    display: inline-block;
+    float: left;
+    font-family: 'Lobster', cursive;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  #nav-toggle{
+    color: #D0E4F2;
+    display: none;
+    font-size: 14px;
+    @include transition(transform, 0.3s, ease); // Rotate icon
+  }
+
+  #top-nav{
+    display: inline-block;
+    @include transition(right, 0.7s, ease); // Ease from right in
+
+    a {
+      color: #D0E4F2;
+      display: inline-block;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 0px 15px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #85A5CC;
+      text-decoration: none;
+    }
+  }
+
+  /* responsive */
+  @media (max-width: 757px) {
+    #nav-toggle{
+      display: inline-block;
+      position: absolute;
+      right: 20px;
+      top: 5px;
+    }
+
+    #top-nav{
+      background-color: #30395C;
+      position: absolute;
+      right: -163px;
+      text-align: center;
+      top: 42px;
+
+      a{
+        display: block;
+        padding: 15px 50px;
+      }
+
+    }
+
+    // Toggled classes
+    .nav-on{
+      right: -14px !important;
+    }
+
+    .nav-toggle-on{
+      -ms-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+  }
+
+  // Keep nav items to the right
+  @media (max-width: 990px) {
+    .nav-wrapper{
+      text-align: right;
+    }
+  }
+
+}

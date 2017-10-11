@@ -1,0 +1,71 @@
+@mixin transition($property, $duration, $timing){
+  -o-transition: $property $duration $timing;
+  -moz-transition: $property $duration $timing;
+  -webkit-transition: $property $duration $timing;
+  transition: $property $duration $timing;
+}
+
+.contact{
+  background-color: #D0E4F2;
+  padding: 50px 0px 80px 0px;
+  text-align: center;
+
+  h2{
+    color: #4A6491;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 35px;
+    padding-bottom: 50px;
+  }
+
+  form{
+
+    input{
+      border: none;
+      background-color: #D0E4F2;
+      color: #30395C;
+      font-family: 'Lato', serif;
+      font-size: 17px;
+      padding: 15px 0px;
+      width: 70% !important;
+    }
+
+    textarea{
+      @extend input;
+      padding: 10px 0px 60px 0px;
+      resize: none;
+    }
+
+    .button{
+      width: 70% !important;
+      margin: auto;
+
+      button{
+        background-color: #D0E4F2;
+        border: 2px solid #4A6491;
+        border-radius: 5px;
+        color: #30395C;
+        float: left;
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        margin-top: 15px;
+        padding: 8px 16px;
+        cursor: pointer;
+        @include transition(all, 0.1s, linear);
+      }
+
+      button:hover{
+        border: 2px solid #85A5CC;
+      }
+    }
+
+    .border{
+      background-color: #85A5CC;
+      height: 1px;
+      margin: auto;
+      width: 70%;
+    }
+
+  }
+}

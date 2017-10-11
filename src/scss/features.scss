@@ -1,0 +1,26 @@
+.features{
+  background-color: #D0E4F2;
+  padding-top: 80px;
+  padding-bottom: 100px;
+  text-align: center;
+
+  .items{
+    border: 1px solid #1A1F2B;
+    border-radius: 100%;
+    color: #1A1F2B;
+    font-family: 'Roboto', sans-serif;
+    height: 140px;
+    margin: auto;
+    width: 140px;
+
+    i{
+      padding: 40px 0px;
+      font-size: 65px;
+    }
+
+    p{
+      padding: 5px 0px;
+      font-size: 16px;
+    }
+  }
+}
