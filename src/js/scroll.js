@@ -6,28 +6,28 @@ var workLinks = document.querySelectorAll('.work-link');
 var aboutLinks = document.querySelectorAll('.about-link');
 var contactLinks = document.querySelectorAll('.contact-link');
 
-workLinks.forEach(function(element) {
-  element.addEventListener('click', scrollWork);
-});
+for (var i = 0; i < workLinks.length; i++) {
+  workLinks[i].addEventListener('click', scrollWork);
+};
 
-aboutLinks.forEach(function(element) {
-  element.addEventListener('click', scrollAbout);
-});
+for (var i = 0; i < aboutLinks.length; i++) {
+  aboutLinks[i].addEventListener('click', scrollAbout);
+};
 
-contactLinks.forEach(function(element) {
-  element.addEventListener('click', scrollContact);
-});
+for (var i = 0; i < contactLinks.length; i++) {
+  contactLinks[i].addEventListener('click', scrollContact);
+};
 
 function scrollContact(){
-  smoothScroll(contact);
+  doScrolling(contact, 600);
 };
 
 function scrollWork(){
-  smoothScroll(work);
+  doScrolling(work, 600);
 };
 
 function scrollAbout(){
-  smoothScroll(about);
+  doScrolling(about, 600);
 };
 
 function currentYPosition() {
@@ -51,28 +51,33 @@ function elmYPosition(elm) {
     } return y;
 }
 
+function doScrolling(element, duration) {
+  var startingY = currentYPosition();
+  var diff = elmYPosition(element) - startingY;
+  var start;
 
-function smoothScroll(elm) {
-  console.log('awe')
-    var startY = currentYPosition();
-    var stopY = elmYPosition(elm);
-    var distance = stopY > startY ? stopY - startY : startY - stopY;
-    if (distance < 100) {
-        scrollTo(0, stopY); return;
+  // Bootstrap our animation - it will get called right before next frame shall be rendered.
+  window.requestAnimationFrame(function step(timestamp) {
+    if (!start) start = timestamp;
+    // Elapsed miliseconds since start of scrolling.
+    var time = timestamp - start;
+    // Get percent of completion in range [0, 1].
+    var percent = Math.min(time / duration, 1);
+
+    if ('requestAnimationFrame' in window === false) {
+      window.scroll(0, diff);
+      console.log('scrolling');
+      if (callback) {
+        callback();
+      }
+      return;
     }
-    var speed = Math.round(distance / 40);
-    if (speed >= 20) speed = 20;
-    var step = Math.round(distance / 25);
-    var leapY = stopY > startY ? startY + step : startY - step;
-    var timer = 0;
-    if (stopY > startY) {
-        for ( var i=startY; i<stopY; i+=step ) {
-            setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-            leapY += step; if (leapY > stopY) leapY = stopY; timer++;
-        } return;
-    }
-    for ( var i=startY; i>stopY; i-=step ) {
-        setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-        leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
-    }
-}
+
+    window.scrollTo(0, startingY + diff * percent);
+
+    // Proceed with animation as long as we wanted it to.
+    if (time < duration) {
+      window.requestAnimationFrame(step);
+    };
+  });
+};
